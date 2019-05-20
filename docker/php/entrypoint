@@ -1,0 +1,50 @@
+#!/bin/bash
+
+RUN_UID=${RUN_UID:=1000}
+RUN_USER=${RUN_USER:=user}
+RUN_GROUP=${RUN_GROUP:=user}
+RUN_USER_TEST=$(grep "[a-zA-Z0-9\-\_]*:[a-zA-Z]:${RUN_UID}:" /etc/passwd)
+
+# Make sure the given group exists
+getent group $RUN_GROUP > /dev/null || groupadd $RUN_GROUP > /dev/null
+
+# Update the user to the configured UID and group if it already exists.
+if [ -n "${RUN_USER_TEST}" ]; then
+    echo "Update user '$RUN_USER'"
+
+    usermod -l ${RUN_USER} $(id -un ${RUN_UID}) 1> /dev/null 2>&1
+    usermod -u $RUN_UID -g $RUN_GROUP $RUN_USER 1> /dev/null 2>&1
+
+# Else create the user with the configured UID and group
+else
+    echo "Create user '$RUN_USER'"
+
+    # Create the user with the corresponding group
+    useradd -u $RUN_UID -g $RUN_GROUP -d /home/$RUN_USER $RUN_USER 1> /dev/null 2>&1
+fi
+
+# Make sure $HOME directory of user exists
+mkdir /home/$RUN_USER 1> /dev/null 2>&1
+chown $RUN_USER:$RUN_GROUP /home/$RUN_USER
+export HOME=/home/$RUN_USER
+
+# Add the user a sudoer
+echo "$RUN_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/100-$RUN_USER
+echo "Defaults:$RUN_USER !requiretty" >> /etc/sudoers
+
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- php-fpm "$@"
+fi
+
+# start the supplied commands with the configured
+if [ "$1" != "php-fpm" ]; then
+    exec su - $RUN_USER -m -s /bin/bash -c "cd $PWD; $*"
+
+# else execute 'php-fpm'
+else
+    exec "$@"
+fi

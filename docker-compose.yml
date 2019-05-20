@@ -1,0 +1,43 @@
+version: '2'
+
+services:
+
+  app:
+    build: ./docker/php/
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=db"
+      - "RUN_UID=1000"
+      - "RUN_USER=user"
+      - "RUN_GROUP=user"
+    links:
+      - db
+
+  web:
+    build: ./docker/nginx/
+    working_dir: /app
+    volumes_from:
+      - app
+    links:
+      - app
+    ports:
+      - 80:80
+  
+  db:
+    image: mysql:5.6
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      - "MYSQL_DATABASE=laravel"
+      - "MYSQL_USER=root"
+      - "MYSQL_PASSWORD="
+      - "MYSQL_ROOT_PASSWORD="
+      - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
+    ports:
+      - 3306:3306
+
+volumes:
+  dbdata:
