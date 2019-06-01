@@ -8,8 +8,12 @@ services:
     volumes:
       - ./app:/app
     environment:
-      - "DB_PORT=3306"
+      - "DB_CONNECTION=pgsql"
       - "DB_HOST=db"
+      - "DB_PORT=5432"
+      - "DB_DATABASE=laravel"
+      - "DB_USERNAME=laravel"
+      - "DB_PASSWORD=password"
       - "RUN_UID=1000"
       - "RUN_USER=user"
       - "RUN_GROUP=user"
@@ -27,17 +31,15 @@ services:
       - 80:80
   
   db:
-    image: mysql:5.6
+    image: postgres:11.3
     volumes:
-      - dbdata:/var/lib/mysql
+      - dbdata:/var/lib/postgresql/data
     environment:
-      - "MYSQL_DATABASE=laravel"
-      - "MYSQL_USER=root"
-      - "MYSQL_PASSWORD="
-      - "MYSQL_ROOT_PASSWORD="
-      - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
+      - "POSTGRES_DB=laravel"
+      - "POSTGRES_USER=laravel"
+      - "POSTGRES_PASSWORD=password"
     ports:
-      - 3306:3306
+      - 5432:5432
 
 volumes:
   dbdata:
