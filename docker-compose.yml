@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
 
@@ -23,8 +23,8 @@ services:
   web:
     build: ./docker/nginx/
     working_dir: /app
-    volumes_from:
-      - app
+    volumes:
+      - ./app:/app
     links:
       - app
     ports:
