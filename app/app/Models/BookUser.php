@@ -16,7 +16,7 @@ class BookUser extends BaseModel {
 	 *
 	 * @var string
 	 */
-	protected $table = 'books_users';
+	protected $table = 'book_user';
 
 	/**
 	 * The attributes that are mass assignable.

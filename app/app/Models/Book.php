@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @package App\Models
  */
 class Book extends BaseModel {
+
+	public const TYPE_HARDCOVER = "HARDCOVER";
+	public const TYPE_SOFTCOVER = "SOFTCOVER";
+	public const TYPE_EBOOK = "EBOOK";
+
 	/**
 	 * The database table used by the model.
 	 *
