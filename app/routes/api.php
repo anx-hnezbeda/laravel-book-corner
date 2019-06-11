@@ -17,11 +17,13 @@ Route::middleware( 'auth:api' )->get( '/user', function ( Request $request ) {
 	return $request->user();
 } );
 
-
-Route::group( [ 'prefix' => 'v1' ], function () {
-
-	Route::resource( 'books', 'Api\\BookController' );
-
-
-
-} );
+JsonApi::register('v1')->routes(function ($api) {
+    $api->resource('books', [
+        'has-one' => 'publisher',
+    ]);
+    $api->resource('bookuser');
+    $api->resource('categories');
+    $api->resource('publishers');
+    $api->resource('tags');
+    $api->resource('users');
+});

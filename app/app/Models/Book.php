@@ -30,6 +30,10 @@ class Book extends BaseModel {
 	protected $fillable = [
 		'publisher_id',
 		'type',
+        'name',
+        'pages',
+        'isbn_10',
+        'isbn_13',
 	];
 
 
@@ -44,7 +48,7 @@ class Book extends BaseModel {
 	 * @return HasOne
 	 */
 	public function publisher(): HasOne {
-		return $this->hasOne( Publisher::class, 'id', 'publisher_id' );
+		return $this->hasOne( Publisher::class, 'id' );
 	}
 
 	/**
