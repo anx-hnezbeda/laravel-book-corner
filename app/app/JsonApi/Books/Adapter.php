@@ -41,7 +41,7 @@ class Adapter extends AbstractAdapter
 
     protected function publisher()
     {
-        return $this->hasOne();
+        return $this->belongsTo();
     }
 
 }

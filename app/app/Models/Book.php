@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -45,10 +46,10 @@ class Book extends BaseModel {
 	protected $hidden = [];
 
 	/**
-	 * @return HasOne
+	 * @return BelongsTo
 	 */
-	public function publisher(): HasOne {
-		return $this->hasOne( Publisher::class, 'id' );
+	public function publisher(): BelongsTo {
+		return $this->belongsTo( Publisher::class );
 	}
 
 	/**
