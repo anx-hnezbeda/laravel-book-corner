@@ -18,12 +18,19 @@ Route::middleware( 'auth:api' )->get( '/user', function ( Request $request ) {
 } );
 
 JsonApi::register('v1')->routes(function ($api) {
-    $api->resource('books', [
-        'has-one' => 'publisher',
-    ]);
-    $api->resource('bookuser');
-    $api->resource('categories');
-    $api->resource('publishers');
+    $api->resource('books')->relationships(function ($relations) {
+        $relations->hasOne('publisher');
+    });
+    $api->resource('bookuser')->relationships(function ($relations) {
+        $relations->hasOne('book');
+        $relations->hasOne('user');
+    });
+    $api->resource('categories')->relationships(function ($relations) {
+        $relations->hasMany('books');
+    });
+    $api->resource('publishers')->relationships(function ($relations) {
+        $relations->hasMany('books');
+    });
     $api->resource('tags');
     $api->resource('users');
 });

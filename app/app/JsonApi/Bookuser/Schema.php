@@ -1,6 +1,6 @@
 <?php
 
-namespace App\JsonApi\Publishers;
+namespace App\JsonApi\Bookuser;
 
 use Neomerx\JsonApi\Schema\SchemaProvider;
 
@@ -10,7 +10,7 @@ class Schema extends SchemaProvider
     /**
      * @var string
      */
-    protected $resourceType = 'publishers';
+    protected $resourceType = 'bookuser';
 
     /**
      * @param $resource
@@ -32,10 +32,9 @@ class Schema extends SchemaProvider
         return [
             'created-at' => $resource->created_at->toAtomString(),
             'updated-at' => $resource->updated_at->toAtomString(),
-            'name' => $resource->name,
-            'short_name' => $resource->short_name,
         ];
     }
+
 
     /**
      * @param object $resource
@@ -46,12 +45,20 @@ class Schema extends SchemaProvider
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
         return [
-            'books' => [
+            'book' => [
                 self::SHOW_SELF => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA => isset($includeRelationships['books']),
+                self::SHOW_DATA => isset($includeRelationships['book']),
                 self::DATA => function () use ($resource) {
-                    return $resource->books;
+                    return $resource->book;
+                },
+            ],
+            'user' => [
+                self::SHOW_SELF => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA => isset($includeRelationships['user']),
+                self::DATA => function () use ($resource) {
+                    return $resource->user;
                 },
             ],
         ];

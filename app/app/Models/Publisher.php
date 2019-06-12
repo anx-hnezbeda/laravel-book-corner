@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Publisher
@@ -28,9 +28,9 @@ class Publisher extends BaseModel
 	];
 
 	/**
-	 * @return BelongsToMany
+	 * @return hasMany
 	 */
-	public function books(): BelongsToMany {
-		return $this->belongsToMany( Book::class );
+	public function books(): HasMany {
+		return $this->hasMany( Book::class );
 	}
 }

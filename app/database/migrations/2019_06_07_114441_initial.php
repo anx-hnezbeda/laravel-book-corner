@@ -76,10 +76,12 @@ class Initial extends Migration {
 		} );
 
 		Schema::create( 'book_user', function ( Blueprint $table ) {
+            $table->bigIncrements( 'id' );
+
 			$table->bigInteger( 'book_id' );
 			$table->bigInteger( 'user_id' );
 
-			$table->primary( [ 'book_id', 'user_id' ] );
+            $table->unique(array('book_id', 'user_id'));
 
 			$table->softDeletes();
 			$table->timestamps();
@@ -97,6 +99,8 @@ class Initial extends Migration {
 			$table->bigInteger( 'author_id' );
 			$table->bigInteger( 'book_id' );
 
+            $table->unique(array('author_id', 'book_id'));
+
 			$table->foreign( 'author_id' )
 			      ->references( 'id' )->on( 'authors' )
 			      ->onDelete( 'cascade' );
@@ -109,6 +113,8 @@ class Initial extends Migration {
 		Schema::create( 'book_category', function ( Blueprint $table ) {
 			$table->bigInteger( 'book_id' );
 			$table->bigInteger( 'category_id' );
+
+            $table->unique(array('book_id', 'category_id'));
 
 			$table->foreign( 'book_id' )
 			      ->references( 'id' )->on( 'books' )
