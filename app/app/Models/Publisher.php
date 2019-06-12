@@ -23,6 +23,8 @@ class Publisher extends BaseModel
 	 * @var array
 	 */
 	protected $fillable = [
+	    'name',
+        'short_name',
 	];
 
 	/**

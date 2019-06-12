@@ -2,18 +2,23 @@
 
 namespace App\Exceptions;
 
+use CloudCreativity\LaravelJsonApi\Exceptions\HandlesErrors;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Neomerx\JsonApi\Exceptions\JsonApiException;
 
 class Handler extends ExceptionHandler
 {
+
+    use HandlesErrors;
+
     /**
      * A list of the exception types that are not reported.
      *
      * @var array
      */
     protected $dontReport = [
-        //
+        JsonApiException::class,
     ];
 
     /**
@@ -27,25 +32,40 @@ class Handler extends ExceptionHandler
     ];
 
     /**
+     * /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
-     * @return void
+     * @param Exception $e
+     * @return mixed|void
+     * @throws Exception
      */
-    public function report(Exception $exception)
+    public function report(Exception $e)
     {
-        parent::report($exception);
+        parent::report($e);
     }
 
     /**
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Exception  $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        return parent::render($request, $exception);
+//        if ($this->isJsonApi($request, $e)) {
+//            return $this->renderJsonApi($request, $e);
+//        }
+
+        return parent::render($request, $e);
+    }
+
+    protected function prepareException(Exception $e)
+    {
+        if ($e instanceof JsonApiException) {
+            return $this->prepareJsonApiException($e);
+        }
+
+        return parent::prepareException($e);
     }
 }
