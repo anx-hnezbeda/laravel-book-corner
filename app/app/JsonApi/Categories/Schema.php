@@ -1,6 +1,6 @@
 <?php
 
-namespace App\JsonApi\Publishers;
+namespace App\JsonApi\Categories;
 
 use Neomerx\JsonApi\Schema\SchemaProvider;
 
@@ -10,7 +10,7 @@ class Schema extends SchemaProvider
     /**
      * @var string
      */
-    protected $resourceType = 'publishers';
+    protected $resourceType = 'categories';
 
     /**
      * @param $resource
@@ -33,7 +33,6 @@ class Schema extends SchemaProvider
             'created-at' => $resource->created_at->toAtomString(),
             'updated-at' => $resource->updated_at->toAtomString(),
             'name' => $resource->name,
-            'short_name' => $resource->short_name,
         ];
     }
 

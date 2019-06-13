@@ -1,6 +1,6 @@
 <?php
 
-namespace App\JsonApi\BookUser;
+namespace App\JsonApi\Bookuser;
 
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
@@ -35,6 +35,16 @@ class Adapter extends AbstractAdapter
     protected function filter($query, Collection $filters)
     {
         // TODO
+    }
+
+    protected function book()
+    {
+        return $this->belongsTo();
+    }
+
+    protected function user()
+    {
+        return $this->belongsTo();
     }
 
 }

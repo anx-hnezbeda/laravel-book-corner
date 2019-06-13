@@ -1,6 +1,6 @@
 <?php
 
-namespace App\JsonApi\Publishers;
+namespace App\JsonApi\Bookusers;
 
 use CloudCreativity\LaravelJsonApi\Validation\AbstractValidators;
 
@@ -14,7 +14,8 @@ class Validators extends AbstractValidators
      *      the allowed paths, an empty array for none allowed, or null to allow all paths.
      */
     protected $allowedIncludePaths = [
-        'books',
+        'book',
+        'user',
     ];
 
     /**

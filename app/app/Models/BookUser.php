@@ -37,27 +37,6 @@ class BookUser extends BaseModel {
 	protected $hidden = [];
 
 	/**
-	 * @return HasOne
-	 */
-	public function publisher(): HasOne {
-		return $this->hasOne( Publisher::class, 'id', 'publisher_id' );
-	}
-
-	/**
-	 * @return BelongsToMany
-	 */
-	public function authors(): BelongsToMany {
-		return $this->belongsToMany( Author::class );
-	}
-
-	/**
-	 * @return BelongsToMany
-	 */
-	public function categories(): BelongsToMany {
-		return $this->belongsToMany( Category::class );
-	}
-
-	/**
 	 * @return BelongsTo
 	 */
 	public function book(): BelongsTo {

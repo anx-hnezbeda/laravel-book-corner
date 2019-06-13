@@ -37,4 +37,8 @@ class Adapter extends AbstractAdapter
         // TODO
     }
 
+    protected function books()
+    {
+        return $this->hasMany();
+    }
 }
