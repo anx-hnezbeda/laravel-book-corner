@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * Class Tag
  * @package App\Models
  */
-class Tag extends BaseModel
-{
+class Tag extends BaseModel {
 	/**
 	 * The database table used by the model.
 	 *
@@ -24,7 +23,8 @@ class Tag extends BaseModel
 	 * @var array
 	 */
 	protected $fillable = [
-		'book_id'
+		'book_id',
+		'name',
 	];
 
 	/**

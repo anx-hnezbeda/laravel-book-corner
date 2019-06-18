@@ -6,8 +6,7 @@ namespace App\Models;
  * Class Author
  * @package App\Models
  */
-class Author extends BaseModel
-{
+class Author extends BaseModel {
 	/**
 	 * The database table used by the model.
 	 *
@@ -21,7 +20,9 @@ class Author extends BaseModel
 	 * @var array
 	 */
 	protected $fillable = [
-		'book_id'
+		'book_id',
+		'name',
+		'biography',
 	];
 
 
