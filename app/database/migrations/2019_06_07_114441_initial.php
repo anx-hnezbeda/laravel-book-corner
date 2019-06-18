@@ -76,12 +76,12 @@ class Initial extends Migration {
 		} );
 
 		Schema::create( 'book_user', function ( Blueprint $table ) {
-            $table->bigIncrements( 'id' );
+			$table->bigIncrements( 'id' );
 
 			$table->bigInteger( 'book_id' );
 			$table->bigInteger( 'user_id' );
 
-            $table->unique(array('book_id', 'user_id'));
+			$table->unique( array( 'book_id', 'user_id' ) );
 
 			$table->softDeletes();
 			$table->timestamps();
@@ -99,7 +99,7 @@ class Initial extends Migration {
 			$table->bigInteger( 'author_id' );
 			$table->bigInteger( 'book_id' );
 
-            $table->unique(array('author_id', 'book_id'));
+			$table->unique( array( 'author_id', 'book_id' ) );
 
 			$table->foreign( 'author_id' )
 			      ->references( 'id' )->on( 'authors' )
@@ -114,7 +114,7 @@ class Initial extends Migration {
 			$table->bigInteger( 'book_id' );
 			$table->bigInteger( 'category_id' );
 
-            $table->unique(array('book_id', 'category_id'));
+			$table->unique( array( 'book_id', 'category_id' ) );
 
 			$table->foreign( 'book_id' )
 			      ->references( 'id' )->on( 'books' )
@@ -122,6 +122,21 @@ class Initial extends Migration {
 
 			$table->foreign( 'category_id' )
 			      ->references( 'id' )->on( 'categories' )
+			      ->onDelete( 'cascade' );
+		} );
+
+		Schema::create( 'book_tag', function ( Blueprint $table ) {
+			$table->bigInteger( 'book_id' );
+			$table->bigInteger( 'tag_id' );
+
+			$table->unique( array( 'book_id', 'tag_id' ) );
+
+			$table->foreign( 'book_id' )
+			      ->references( 'id' )->on( 'books' )
+			      ->onDelete( 'cascade' );
+
+			$table->foreign( 'tag_id' )
+			      ->references( 'id' )->on( 'tags' )
 			      ->onDelete( 'cascade' );
 		} );
 	}
@@ -132,6 +147,7 @@ class Initial extends Migration {
 	 * @return void
 	 */
 	public function down() {
+		Schema::dropIfExists( 'book_tag' );
 		Schema::dropIfExists( 'book_category' );
 		Schema::dropIfExists( 'author_book' );
 		Schema::dropIfExists( 'book_user' );

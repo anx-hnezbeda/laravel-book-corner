@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class Book
@@ -30,11 +29,14 @@ class Book extends BaseModel {
 	 */
 	protected $fillable = [
 		'publisher_id',
+		'name',
+		'pages',
+		'ean',
+		'isbn_10',
+		'isbn_13',
+		'release_date',
 		'type',
-        'name',
-        'pages',
-        'isbn_10',
-        'isbn_13',
+		'nsfw',
 	];
 
 
@@ -64,6 +66,13 @@ class Book extends BaseModel {
 	 */
 	public function categories(): BelongsToMany {
 		return $this->belongsToMany( Category::class );
+	}
+
+	/**
+	 * @return BelongsToMany
+	 */
+	public function tags(): BelongsToMany {
+		return $this->belongsToMany( Tag::class );
 	}
 
 }

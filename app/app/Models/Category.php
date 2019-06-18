@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * Class Category
  * @package App\Models
  */
-class Category extends BaseModel
-{
+class Category extends BaseModel {
 	/**
 	 * The database table used by the model.
 	 *
@@ -24,6 +23,7 @@ class Category extends BaseModel
 	 */
 	protected $fillable = [
 		'name',
+		'parent_id',
 	];
 
 	/**

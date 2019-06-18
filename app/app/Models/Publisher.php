@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * Class Publisher
  * @package App\Models
  */
-class Publisher extends BaseModel
-{
+class Publisher extends BaseModel {
 	/**
 	 * The database table used by the model.
 	 *
@@ -23,8 +22,8 @@ class Publisher extends BaseModel
 	 * @var array
 	 */
 	protected $fillable = [
-	    'name',
-        'short_name',
+		'name',
+		'short_name',
 	];
 
 	/**
