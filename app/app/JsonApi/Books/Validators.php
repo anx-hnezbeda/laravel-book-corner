@@ -17,6 +17,7 @@ class Validators extends AbstractValidators {
         'authors',
         'categories',
         'tags',
+        'users',
 	];
 
 	/**

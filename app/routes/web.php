@@ -14,3 +14,17 @@
 Route::get( '/', function () {
 	return view( 'welcome' );
 } );
+
+
+if (env('APP_DEBUG')) {
+    \DB::listen(function ($sql) {
+        global $queryCount, $requestID;
+        if (!isset($requestID)) {
+            $requestID = uniqid();
+            $queryCount = 0;
+        }
+
+        \Log::info($sql->sql);
+        \Log::info('Request '.$requestID.', Query: '.++$queryCount.' Time: '.$sql->time);
+    });
+}
