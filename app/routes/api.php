@@ -27,7 +27,18 @@ JsonApi::register( 'v1' )->routes( function ( $api ) {
         $relations->hasMany( 'categories');
         $relations->hasMany( 'tags' );
         $relations->hasMany( 'users' );
-	} );
+	} )->controller()->routes(function ($books) {
+	    $books->get('/stats', function() {
+	        return [
+	            'books' => \App\Models\Book::count(),
+                'available' => \App\Models\Book::doesntHave('users')->count(),
+                'taken' => \App\Models\Book::whereHas('users')->count(),
+                'categories' => \App\Models\Category::select('id', 'name')->withCount('books')->orderBy('books_count', 'DESC')->get(),
+                'tags' => \App\Models\Tag::select('id', 'name')->withCount('books')->orderBy('books_count', 'DESC')->get(),
+                'users' => \App\Models\User::select('id', 'name')->withCount('books')->has('books', '>', 0)->orderBy('books_count', 'DESC')->get(),
+            ];
+        });
+    });
 	$api->resource( 'bookuser' )->relationships( function ( $relations ) {
 		$relations->hasOne( 'book' );
 		$relations->hasOne( 'user' );
@@ -45,3 +56,5 @@ JsonApi::register( 'v1' )->routes( function ( $api ) {
         $relations->hasMany( 'books' );
     } );
 } );
+
+
