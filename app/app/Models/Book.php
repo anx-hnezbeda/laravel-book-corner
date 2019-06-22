@@ -81,4 +81,5 @@ class Book extends BaseModel {
     public function users(): BelongsToMany {
         return $this->belongsToMany( User::class );
     }
+
 }

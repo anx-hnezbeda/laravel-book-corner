@@ -31,6 +31,7 @@ class Schema extends SchemaProvider {
 		return [
 			'created-at' => $resource->created_at->toAtomString(),
 			'updated-at' => $resource->updated_at->toAtomString(),
+            'release_date' => $resource->release_date,
 			'name'       => $resource->name,
 			'pages'      => $resource->pages,
 			'isbn_10'    => $resource->isbn_10,
@@ -58,9 +59,9 @@ class Schema extends SchemaProvider {
             'authors' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset( $includeRelationships['categories'] ),
+                self::SHOW_DATA    => isset( $includeRelationships['authors'] ),
                 self::DATA         => function () use ( $resource ) {
-                    return $resource->categories;
+                    return $resource->authors;
                 },
             ],
             'categories' => [
@@ -74,17 +75,17 @@ class Schema extends SchemaProvider {
             'tags' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset( $includeRelationships['categories'] ),
+                self::SHOW_DATA    => isset( $includeRelationships['tags'] ),
                 self::DATA         => function () use ( $resource ) {
-                    return $resource->categories;
+                    return $resource->tags;
                 },
             ],
             'users' => [
                 self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::SHOW_DATA    => isset( $includeRelationships['categories'] ),
+                self::SHOW_DATA    => isset( $includeRelationships['users'] ),
                 self::DATA         => function () use ( $resource ) {
-                    return $resource->categories;
+                    return $resource->users;
                 },
             ],
 		];
