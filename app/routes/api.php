@@ -31,6 +31,8 @@ JsonApi::register( 'v1' )->routes( function ( $api ) {
 	$api->resource( 'publishers' )->relationships( function ( $relations ) {
 		$relations->hasMany( 'books' );
 	} );
-	$api->resource( 'tags' );
+	$api->resource( 'tags' )->relationships( function ( $relations ) {
+		$relations->hasMany( 'books' );
+	} );
 	$api->resource( 'users' );
 } );
