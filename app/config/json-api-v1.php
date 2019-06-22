@@ -53,6 +53,7 @@ return [
 	| `'posts' => App\Post::class`
 	*/
 	'resources'     => [
+        'authors'      => \App\Models\Author::class,
 		'books'      => \App\Models\Book::class,
 		'bookuser'   => \App\Models\BookUser::class,
 		'categories' => \App\Models\Category::class,

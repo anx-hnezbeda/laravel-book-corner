@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 /**
  * Class Author
  * @package App\Models
@@ -32,4 +34,11 @@ class Author extends BaseModel {
 	 * @var array
 	 */
 	protected $hidden = [];
+
+    /**
+     * @return BelongsToMany
+     */
+    public function books(): BelongsToMany {
+        return $this->belongsToMany( Book::class );
+    }
 }

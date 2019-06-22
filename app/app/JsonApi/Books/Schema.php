@@ -55,6 +55,38 @@ class Schema extends SchemaProvider {
 					return $resource->publisher;
 				},
 			],
+            'authors' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => isset( $includeRelationships['categories'] ),
+                self::DATA         => function () use ( $resource ) {
+                    return $resource->categories;
+                },
+            ],
+            'categories' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => isset( $includeRelationships['categories'] ),
+                self::DATA         => function () use ( $resource ) {
+                    return $resource->categories;
+                },
+            ],
+            'tags' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => isset( $includeRelationships['categories'] ),
+                self::DATA         => function () use ( $resource ) {
+                    return $resource->categories;
+                },
+            ],
+            'users' => [
+                self::SHOW_SELF    => true,
+                self::SHOW_RELATED => true,
+                self::SHOW_DATA    => isset( $includeRelationships['categories'] ),
+                self::DATA         => function () use ( $resource ) {
+                    return $resource->categories;
+                },
+            ],
 		];
 	}
 }

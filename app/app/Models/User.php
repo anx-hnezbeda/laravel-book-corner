@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -44,9 +44,9 @@ class User extends Authenticatable {
 	];
 
 	/**
-	 * @return HasMany
+	 * @return BelongsToMany
 	 */
-	public function book_user(): HasMany {
-		return $this->hasMany( BookUser::class, 'user_id', 'id' );
+	public function books(): BelongsToMany {
+        return $this->belongsToMany(Book::class );
 	}
 }

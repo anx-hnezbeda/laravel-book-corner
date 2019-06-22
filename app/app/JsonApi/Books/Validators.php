@@ -14,6 +14,9 @@ class Validators extends AbstractValidators {
 	 */
 	protected $allowedIncludePaths = [
 		'publisher',
+        'authors',
+        'categories',
+        'tags',
 	];
 
 	/**

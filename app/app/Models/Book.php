@@ -75,4 +75,10 @@ class Book extends BaseModel {
 		return $this->belongsToMany( Tag::class );
 	}
 
+    /**
+     * @return BelongsToMany
+     */
+    public function users(): BelongsToMany {
+        return $this->belongsToMany( User::class );
+    }
 }

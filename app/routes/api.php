@@ -18,8 +18,15 @@ Route::middleware( 'auth:api' )->get( '/user', function ( Request $request ) {
 } );
 
 JsonApi::register( 'v1' )->routes( function ( $api ) {
+    $api->resource( 'authors' )->relationships( function ( $relations ) {
+        $relations->hasMany( 'books' );
+    } );
 	$api->resource( 'books' )->relationships( function ( $relations ) {
 		$relations->hasOne( 'publisher' );
+        $relations->hasMany( 'authors' );
+        $relations->hasMany( 'categories');
+        $relations->hasMany( 'tags' );
+        $relations->hasMany( 'users' );
 	} );
 	$api->resource( 'bookuser' )->relationships( function ( $relations ) {
 		$relations->hasOne( 'book' );
@@ -34,5 +41,7 @@ JsonApi::register( 'v1' )->routes( function ( $api ) {
 	$api->resource( 'tags' )->relationships( function ( $relations ) {
 		$relations->hasMany( 'books' );
 	} );
-	$api->resource( 'users' );
+	$api->resource( 'users' )->relationships( function ( $relations ) {
+        $relations->hasMany( 'books' );
+    } );
 } );

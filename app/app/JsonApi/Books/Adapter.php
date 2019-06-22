@@ -39,4 +39,19 @@ class Adapter extends AbstractAdapter {
 		return $this->belongsTo();
 	}
 
+    protected function tags() {
+        return $this->hasMany();
+    }
+
+    protected function categories() {
+        return $this->hasMany();
+    }
+
+    protected function authors() {
+        return $this->hasMany();
+    }
+
+    protected function users() {
+        return $this->hasMany();
+    }
 }
