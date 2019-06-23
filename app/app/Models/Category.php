@@ -39,4 +39,18 @@ class Category extends BaseModel {
 	public function books(): BelongsToMany {
 		return $this->belongsToMany( Book::class );
 	}
+
+    /**
+     * @return BelongsToMany
+     */
+    public function books_available(): BelongsToMany {
+        return $this->belongsToMany( Book::class )->doesntHave('users');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function books_borrowed(): BelongsToMany {
+        return $this->belongsToMany( Book::class )->whereHas('users');
+    }
 }

@@ -30,11 +30,17 @@ JsonApi::register( 'v1' )->routes( function ( $api ) {
 	} )->controller()->routes(function ($books) {
 	    $books->get('/stats', function() {
 	        return [
-	            'books' => \App\Models\Book::count(),
-                'available' => \App\Models\Book::doesntHave('users')->count(),
-                'taken' => \App\Models\Book::whereHas('users')->count(),
-                'categories' => \App\Models\Category::select('id', 'name')->withCount('books')->orderBy('books_count', 'DESC')->get(),
-                'tags' => \App\Models\Tag::select('id', 'name')->withCount('books')->orderBy('books_count', 'DESC')->get(),
+	            'books_count' => \App\Models\Book::count(),
+                'books_available_count' => \App\Models\Book::doesntHave('users')->count(),
+                'books_borrowed_count' => \App\Models\Book::whereHas('users')->count(),
+                'categories' => \App\Models\Category::select('id', 'name')
+                    ->withCount([ 'books', 'books_available', 'books_borrowed'])
+                    ->orderBy('books_count', 'DESC')
+                    ->get(),
+                'tags' => \App\Models\Tag::select('id', 'name')
+                    ->withCount([ 'books', 'books_available', 'books_borrowed'])
+                    ->orderBy('books_count', 'DESC')
+                    ->get(),
                 'users' => \App\Models\User::select('id', 'name')->withCount('books')->has('books', '>', 0)->orderBy('books_count', 'DESC')->get(),
             ];
         });
