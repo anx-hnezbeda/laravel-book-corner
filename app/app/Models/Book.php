@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use DateTime;
+use DateTimeZone;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -46,6 +49,46 @@ class Book extends BaseModel {
 	 * @var array
 	 */
 	protected $hidden = [];
+
+    /**
+     * The "booting" method of the model.
+     *
+     * Adds global scope to filter out nsfw books during work hours
+     *
+     * @throws \Exception
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        if (static::workTime()) {
+            static::addGlobalScope('nsfw', function (Builder $builder) {
+                $builder->where('nsfw', '=', false);
+            });
+        }
+    }
+
+    /**
+     * Checks if the current time is work time in Germany/Austria
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    protected static function workTime(): bool {
+        $tzInfo = new DateTimeZone('Europe/Berlin');
+        $current = new DateTime('now', $tzInfo);
+        $workStart = new DateTime('now', $tzInfo);
+        $workEnd = new DateTime('now', $tzInfo);
+
+        $workStart->setTime(9, 0, 0, 0);
+        $workEnd->setTime(17, 0,0,0);
+
+        if ($current > $workStart && $current < $workEnd)
+        {
+            return true;
+        }
+        return false;
+    }
 
 	/**
 	 * @return BelongsTo
