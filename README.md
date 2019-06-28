@@ -1,4 +1,4 @@
-## Start project
+## Laravel Book Corner
 
 You can run the Book Corner API using the provided Docker setup for development:
 
