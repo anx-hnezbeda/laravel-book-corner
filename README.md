@@ -8,6 +8,12 @@ chmod -R 777 app/storage
 docker-compose up
 ```
 
+In a paralel console you can run the migrations:
+
+```
+docker-compose run --rm app php artisan migrate
+```
+
 The following API endpoints are available:
 
 * [/api/v1/authors](http://localhost/api/v1/authors)
